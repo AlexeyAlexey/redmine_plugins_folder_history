@@ -1,0 +1,31 @@
+<%=@changes.created_at%>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%@changes.plugins_changes.each_pair do |plugin_name, plugin_info|%>
+  	  <tr>
+  	    <td>
+  	      <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
+  	      <%="added" if @changes.plugins_list["added"].include?(plugin_name)%>
+  	    </td>
+  	    <td><%=plugin_name%></td>
+  	    <td>
+  	      <%plugin_info.each_pair do |hash, info|%>
+  	        <p><%=hash%></p>
+            <p><%=info.join(' ')%></p>
+            <br>
+  	      <%end%>
+
+  	    </td>
+  	  </tr>
+  	<%end%>
+
+  </tbody>
+</table>
