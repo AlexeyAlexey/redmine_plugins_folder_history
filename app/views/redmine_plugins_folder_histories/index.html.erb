@@ -1,31 +1,68 @@
-<%=@changes.created_at%>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<%= form_tag(redmine_plugins_folder_histories_path, :method => :get) do %>
+  <fieldset><legend><%= l(:label_filter_plural) %></legend>
+    <table>
+      <tbody>
+        <tr>
+          <td width="100px">
+            <strong><%=l(:field_created_on)%></strong>
+          </td>
+          <td>
+            <label for="created_at_from">From </label>
+            <input type="text" class="time_field_from" id="created_at_from" name="created_at_from" value="<%=params[:created_at_from]%>">
 
-  <tbody>
-    <%@changes.plugins_changes.each_pair do |plugin_name, plugin_info|%>
-  	  <tr>
-  	    <td>
-  	      <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
-  	      <%="added" if @changes.plugins_list["added"].include?(plugin_name)%>
-  	    </td>
-  	    <td><%=plugin_name%></td>
-  	    <td>
-  	      <%plugin_info.each_pair do |hash, info|%>
-  	        <p><%=hash%></p>
-            <p><%=info.join(' ')%></p>
-            <br>
-  	      <%end%>
+            <label for="created_at_to">To </label>
+            <input type="text" class="time_field_to" id="created_at_to" name="created_at_to" value="<%=params[:created_at_to]%>">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
+  <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+<%end%>
+&nbsp;
 
-  	    </td>
-  	  </tr>
-  	<%end%>
+<div class="autoscroll">
+  <table class="list">
+    <thead>
+      <tr>
+        <%= sort_header_tag('created_at', :caption => l(:field_created_on), :default_order => 'desc') %>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%@changes.each do |change|%>
+        <tr>
+          <td><%=change.created_at%></td>
+          <td><%=link_to "Show", redmine_plugins_folder_history_path(id: change.id)%></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
 
-  </tbody>
-</table>
+<span class="pagination"><%= pagination_links_full @changes_pages, @changes_count %></span>
+
+<script type="text/javascript">
+//<![CDATA[
+  $(document).ready(function() {
+    $( "#created_at_from" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      dateFormat: "yy-mm-dd",
+      onClose: function( selectedDate ) {
+        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+
+    $( "#created_at_to" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      dateFormat: "yy-mm-dd",
+      onClose: function( selectedDate ) {
+        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  })
+</script>
