@@ -19,6 +19,7 @@
   	        <strong>
   	          <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
   	          <%="added" if @changes.plugins_list["added"].include?(plugin_name)%>
+  	          <%="changed" if @changes.plugins_list["changed"].include?(plugin_name)%>
   	        </strong>
   	      </td>
   	      <td><strong><%=plugin_name%></strong></td>

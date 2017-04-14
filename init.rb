@@ -20,7 +20,7 @@ ActionDispatch::Callbacks.to_prepare do
 		begin
 	      folders_db = RedminePluginsFolderHistory.last
 	      last_plugins_changes = folders_db.try(:plugins_changes)
-		  
+		   
 		  cmd_ls = open("|ls -ls ./plugins")
 
 		  line = (cmd_ls.gets || "").split(' ') #=> ["total", "176"]
@@ -28,7 +28,8 @@ ActionDispatch::Callbacks.to_prepare do
 
           folders = last_plugins_changes || {}
 	      folders_list = {"list" => []}
-
+          old_number_of_hashes = folders.map{|key, value| [key, value.size]} #[["plugin_name", "hash numbers"], ... ]
+#
 		  while (line = cmd_ls.gets)
 		    folder_info = line.split(' ')
 		    #=> ["4", "drwxr-xr-x", "9", "ubuntu", "ubuntu", "4096", "Dec", "26", "09:29", "email_notification_for_author_of_issue_where_status_in"]
@@ -55,9 +56,14 @@ ActionDispatch::Callbacks.to_prepare do
           unless folders_db.nil?
             folders_list["deleted"] = folders_db.plugins_list["list"] - folders_list["list"] 
             folders_list["added"] = folders_list["list"] - folders_db.plugins_list["list"]
+
+            new_number_of_hashes = folders.map{|key, value| [key, value.size]} #[["plugin_name", "hash numbers"], ... ]
+
+            folders_list["changed"] = (old_number_of_hashes - new_number_of_hashes).map{|res| res.first}
           else
           	folders_list["deleted"] = []
           	folders_list["added"]   = []
+          	folders_list["changed"] = []
           end
           new_changes.plugins_list = folders_list #{"list" => ["plugin_name", ...], "deleted" => [], "added" => []}
           
