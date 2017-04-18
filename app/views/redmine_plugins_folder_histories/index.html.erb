@@ -26,6 +26,9 @@
     <thead>
       <tr>
         <%= sort_header_tag('created_at', :caption => l(:field_created_on), :default_order => 'desc') %>
+        <th>Changed</th>
+        <th>Added</th>
+        <th>Deleted</th>
         <th></th>
       </tr>
     </thead>
@@ -33,6 +36,9 @@
       <%@changes.each do |change|%>
         <tr>
           <td><%=change.created_at%></td>
+          <td><%=change.was_changed ? "Yes" : "No"%></td>
+          <td><%=change.was_added ? "Yes" : "No"%></td>
+          <td><%=change.was_deleted ? "Yes" : "No"%></td>
           <td><%=link_to "Show", redmine_plugins_folder_history_path(id: change.id)%></td>
         </tr>
       <%end%>

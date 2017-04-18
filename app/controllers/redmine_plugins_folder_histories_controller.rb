@@ -27,7 +27,7 @@ class RedminePluginsFolderHistoriesController < ApplicationController
 
   	@offset ||= @changes_pages.offset
 
-  	@changes = @changes_scope.order(sort_clause).limit(@limit).offset(@offset).to_a
+  	@changes = @changes_scope.select("id, created_at, was_changed, was_added, was_deleted").order(sort_clause).limit(@limit).offset(@offset).to_a
 
   end
 

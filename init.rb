@@ -16,6 +16,7 @@ end
 
 
 ActionDispatch::Callbacks.to_prepare do
+
 	if ActiveRecord::Base.connection.table_exists?(:redmine_plugins_folder_histories)
 		begin
 	      folders_db = RedminePluginsFolderHistory.last
@@ -36,7 +37,7 @@ ActionDispatch::Callbacks.to_prepare do
 		    folder_name = folder_info.last
 		    folders_list["list"] << folder_name
 		    	        
-		    cmd_md5sum = open("|ls -alR ./plugins/#{folder_name} | md5sum")
+		    cmd_md5sum = open("|ls -lR ./plugins/#{folder_name} | md5sum")
 		    md5sum_str = cmd_md5sum.gets
 		    cmd_md5sum.close
 		    
@@ -66,10 +67,11 @@ ActionDispatch::Callbacks.to_prepare do
           	folders_list["changed"] = []
           end
           new_changes.plugins_list = folders_list #{"list" => ["plugin_name", ...], "deleted" => [], "added" => []}
-          
+          new_changes.was_deleted = !folders_list["deleted"].empty?
+          new_changes.was_added   = !folders_list["added"].empty?
+          new_changes.was_changed = !folders_list["changed"].empty?
           new_changes.save
 		rescue Exception => e
-
 		  Rails.logger.error e
 		ensure
 		  cmd_ls.close

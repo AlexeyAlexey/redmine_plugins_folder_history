@@ -1,6 +1,8 @@
 <%=link_to 'Changes List', redmine_plugins_folder_histories_path%>
 <br>
-<%=@changes.created_at%>
+<p><%=@changes.created_at%></p>
+<p><%= "Changed/" if @changes.was_changed %><%= "Added/" if @changes.was_added %><%= "Deleted" if @changes.was_deleted %></p>
+
 
 <div class="autoscroll">
   <table class="list">
@@ -17,7 +19,7 @@
   	    <tr>
   	      <td>
   	        <strong>
-  	          <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
+              <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
   	          <%="added" if @changes.plugins_list["added"].include?(plugin_name)%>
   	          <%="changed" if @changes.plugins_list["changed"].include?(plugin_name)%>
   	        </strong>
