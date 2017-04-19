@@ -1,11 +1,11 @@
 
 Redmine::Plugin.register :redmine_plugins_folder_history do
   name 'Redmine Plugins Folder History plugin'
-  author 'Author name'
+  author 'Alexey Kondratenko'
   description 'This is a plugin for Redmine'
-  version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  version '0.1.0'
+  url 'https://github.com/AlexeyAlexey/redmine_plugins_folder_history'
+  author_url 'https://github.com/AlexeyAlexey'
 
   settings :default => {'empty' => true}, :partial => 'settings/redmine_plugins_folder_history/settings'
 
