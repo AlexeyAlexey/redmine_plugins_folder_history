@@ -1,0 +1,40 @@
+<%=link_to 'Changes List', redmine_plugins_folder_histories_path%>
+<br>
+<p><%=@changes.created_at%></p>
+<p><%= "Changed/" if @changes.was_changed %><%= "Added/" if @changes.was_added %><%= "Deleted" if @changes.was_deleted %></p>
+
+
+<div class="autoscroll">
+  <table class="list">
+    <thead>
+      <tr>
+        <th>Added/Dleted</th>
+        <th>List directory contents</th>
+        <th>file permissions/number of links/owner name/owner group/file size/time of last modification/the name of the file or directory/time of generation information</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%@changes.plugins_changes.each_pair do |plugin_name, plugin_info|%>
+  	    <tr>
+  	      <td>
+  	        <strong>
+              <%="deleted" if @changes.plugins_list["deleted"].include?(plugin_name)%>
+  	          <%="added" if @changes.plugins_list["added"].include?(plugin_name)%>
+  	          <%="changed" if @changes.plugins_list["changed"].include?(plugin_name)%>
+  	        </strong>
+  	      </td>
+  	      <td><strong><%=plugin_name%></strong></td>
+  	      <td>
+  	        <%plugin_info.each_pair do |hash, info|%>
+  	          <p>hash: <%=hash%></p>
+              <p><%=info.join(' ')%></p>
+              <br>
+  	        <%end%>
+  	      </td>
+  	    </tr>
+  	  <%end%>
+
+    </tbody>
+  </table>
+</div>
