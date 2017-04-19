@@ -1,3 +1,40 @@
-= redmine_plugins_folder_history
 
-Description goes here
+Description
+
+  The plugin checks changes in the plugin’s directory when the application is launched (A hash is generated for each file or directory in the plugins folder. The hash is compared with a previously generated hash)
+  The link to the page of changes is added to the administrator’s page ('Plugins folder history')
+
+  The list of changes is ordered by the application launch time. Each line in the list has a link to the page with more information about each folder or file in the plugin’s directory
+
+
+
+  Installing a plugin (http://www.redmine.org/projects/redmine/wiki/Plugins)
+    
+    1. Clone from https://github.com/AlexeyAlexey/redmine_plugins_folder_history.git (tag v_._._)
+    
+    2. Copy redmine_plugins_folder_history to plugins folder of redmine
+    
+    3. Run the following command in #{RAILS_ROOT} to upgrade your database (make a db backup before). 
+
+        rake redmine:plugins:migrate NAME=redmine_plugins_folder_history RAILS_ENV=production
+        
+    4. Restart app (redmine)
+
+
+
+  Uninstalling a plugin (http://www.redmine.org/projects/redmine/wiki/Plugins)
+    
+    1. Run the following command to downgrade your database (make a db backup before):
+
+       rake redmine:plugins:migrate NAME=redmine_plugins_folder_history VERSION=0 RAILS_ENV=production
+
+    2. Remove your plugin from the plugins folder: #{RAILS_ROOT}/plugins
+    
+    3. Restart app (redmine)
+
+
+
+  Changelog
+
+    v0.1.0 - 19 April 2017
+      Release version
