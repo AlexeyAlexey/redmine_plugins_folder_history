@@ -13,6 +13,18 @@
             <label for="created_at_to">To </label>
             <input type="text" class="time_field_to" id="created_at_to" name="created_at_to" value="<%=params[:created_at_to]%>">
           </td>
+          <td>
+            <label for="was_changed">Changed</label>
+            <%=check_box_tag("was_changed", "1", !params["was_changed"].blank?)%>
+          </td>
+          <td>
+            <label for="was_added">Added</label>
+            <%=check_box_tag("was_added", "1", !params["was_added"].blank?)%>
+          </td>
+          <td>
+            <label for="was_deleted">Deleted</label>
+            <%=check_box_tag("was_deleted", "1", !params["was_deleted"].blank?)%>
+          </td>
         </tr>
       </tbody>
     </table>

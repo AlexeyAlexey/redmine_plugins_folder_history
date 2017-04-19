@@ -22,6 +22,15 @@ class RedminePluginsFolderHistoriesController < ApplicationController
     if !params[:created_at_from].blank? and !params[:created_at_to].blank?
       @changes_scope = @changes_scope.where("DATE(created_at) BETWEEN ? AND ?", params[:created_at_from], params[:created_at_to])
     end
+    if !params[:was_changed].blank? 
+      @changes_scope = @changes_scope.where("was_changed = ?", params[:was_changed])
+    end
+    if !params[:was_added].blank? 
+      @changes_scope = @changes_scope.where("was_added = ?", params[:was_added])
+    end
+    if !params[:was_deleted].blank? 
+      @changes_scope = @changes_scope.where("was_deleted = ?", params[:was_deleted])
+    end
 
   	@changes_pages = Paginator.new @changes_scope.count, @limit, params['page']
 
