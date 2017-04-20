@@ -38,3 +38,6 @@ The list of changes is ordered by the application launch time. Each line in the 
 
   v0.1.0 - 19 April 2017
     Release version
+
+  v0.2.0 - 20 April 2017
+    Chinese was added (internationalization)
