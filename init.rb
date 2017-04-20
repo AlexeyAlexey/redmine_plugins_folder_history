@@ -3,7 +3,7 @@ Redmine::Plugin.register :redmine_plugins_folder_history do
   name 'Redmine Plugins Folder History plugin'
   author 'Alexey Kondratenko'
   description 'This is a plugin for Redmine'
-  version '0.1.0'
+  version '0.2.0'
   url 'https://github.com/AlexeyAlexey/redmine_plugins_folder_history'
   author_url 'https://github.com/AlexeyAlexey'
 
